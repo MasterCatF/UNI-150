@@ -526,13 +526,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .reg-monto {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 22px;
+  .reg-check {
+    font-size: 20px;
     color: var(--verde);
     text-shadow: 0 0 12px rgba(0,200,81,0.5);
-    white-space: nowrap;
     flex-shrink: 0;
+    font-weight: 700;
   }
   .reg-numero {
     font-size: 11px;
@@ -607,16 +606,12 @@
     <!-- ESTADÍSTICAS -->
     <div class="meta-stats">
       <div class="stat-card">
-        <div class="stat-label">Meta total</div>
-        <div class="stat-value gold" id="stat-meta">S/ 500,000</div>
+        <div class="stat-label">Meta de donaciones</div>
+        <div class="stat-value gold">10 000k</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Recaudado</div>
-        <div class="stat-value green" id="stat-recaudado">S/ 0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Faltan</div>
-        <div class="stat-value red" id="stat-faltan">S/ 500,000</div>
+        <div class="stat-label">Progreso</div>
+        <div class="stat-value green" id="stat-pct">0%</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Donantes</div>
@@ -632,7 +627,7 @@
     <div class="progress-header">
       <div>
         <div class="progress-title">⚡ Progreso de recaudación</div>
-        <p style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-top:4px;">Meta: S/ 500,000.00</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-top:4px;">Meta: 10 000k donaciones</p>
       </div>
       <div class="progress-pct" id="pct-display">0%</div>
     </div>
@@ -642,8 +637,8 @@
     </div>
 
     <div class="progress-amounts">
-      <strong id="bottom-recaudado">S/ 0.00 recaudado</strong>
-      <span id="bottom-faltan">Faltan S/ 500,000.00</span>
+      <strong id="bottom-recaudado">0% completado</strong>
+      <span id="bottom-faltan">Falta 100%</span>
     </div>
   </div>
 
@@ -672,10 +667,35 @@
               ║       alt="QR Yape UNI 150 años">        ║
               ╚══════════════════════════════════════════╝
             -->
-               <img src="qr-yape.png"                  
-                    width="200" height="200"           
-                    alt="QR Yape UNI 150 años">  
-            
+            <div class="qr-placeholder">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Marco QR decorativo -->
+                <rect x="4" y="4" width="28" height="28" rx="4" stroke="#6B2D8B" stroke-width="3" fill="none"/>
+                <rect x="12" y="12" width="12" height="12" rx="2" fill="#6B2D8B"/>
+                <rect x="48" y="4" width="28" height="28" rx="4" stroke="#6B2D8B" stroke-width="3" fill="none"/>
+                <rect x="56" y="12" width="12" height="12" rx="2" fill="#6B2D8B"/>
+                <rect x="4" y="48" width="28" height="28" rx="4" stroke="#6B2D8B" stroke-width="3" fill="none"/>
+                <rect x="12" y="56" width="12" height="12" rx="2" fill="#6B2D8B"/>
+                <rect x="40" y="40" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="48" y="40" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="56" y="40" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="64" y="40" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="72" y="40" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="40" y="48" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="56" y="48" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="72" y="48" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="40" y="56" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="48" y="56" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="64" y="56" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="40" y="64" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="56" y="64" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="72" y="64" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="48" y="72" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="64" y="72" width="4" height="4" rx="1" fill="#6B2D8B"/>
+                <rect x="72" y="72" width="4" height="4" rx="1" fill="#6B2D8B"/>
+              </svg>
+              <span style="color:#6B2D8B;font-size:11px;line-height:1.4;">Sube tu QR de<br>Yape aquí</span>
+            </div>
           </div>
           <div class="qr-label">
             <h3>ESCANEA Y DONA</h3>
@@ -716,8 +736,8 @@
         </div>
 
         <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">Total acumulado</span>
-          <span style="font-family:'Bebas Neue';font-size:28px;color:var(--verde);text-shadow:0 0 12px rgba(0,200,81,0.5);" id="total-footer">S/ 0.00</span>
+          <span style="font-size:12px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">Progreso total</span>
+          <span style="font-family:'Bebas Neue';font-size:28px;color:var(--verde);text-shadow:0 0 12px rgba(0,200,81,0.5);" id="total-footer">0%</span>
         </div>
       </div>
     </div>
@@ -787,22 +807,18 @@
 
   /* ——— ACTUALIZAR UI ——— */
   function actualizarUI() {
-    const pct = Math.min((totalRecaudado / META) * 100, 100);
-    const faltan = Math.max(META - totalRecaudado, 0);
+    const pct    = Math.min((totalRecaudado / META) * 100, 100);
+    const faltan = Math.max(100 - pct, 0);
 
     document.getElementById('progress-bar').style.width = pct + '%';
-    document.getElementById('pct-display').textContent = pct.toFixed(1) + '%';
-
-    const fmt = n => 'S/ ' + n.toLocaleString('es-PE', {minimumFractionDigits:2, maximumFractionDigits:2});
-
-    document.getElementById('stat-recaudado').textContent = fmt(totalRecaudado);
-    document.getElementById('stat-faltan').textContent = fmt(faltan);
+    document.getElementById('pct-display').textContent  = pct.toFixed(1) + '%';
+    document.getElementById('stat-pct').textContent     = pct.toFixed(1) + '%';
     document.getElementById('stat-donantes').textContent = ingresos.length;
 
-    document.getElementById('bottom-recaudado').textContent = fmt(totalRecaudado) + ' recaudado';
-    document.getElementById('bottom-faltan').textContent = 'Faltan ' + fmt(faltan);
-    document.getElementById('total-footer').textContent = fmt(totalRecaudado);
-    document.getElementById('total-items').textContent = ingresos.length + (ingresos.length === 1 ? ' entrada' : ' entradas');
+    document.getElementById('bottom-recaudado').textContent = pct.toFixed(1) + '% completado';
+    document.getElementById('bottom-faltan').textContent    = 'Falta ' + faltan.toFixed(1) + '%';
+    document.getElementById('total-footer').textContent     = pct.toFixed(1) + '%';
+    document.getElementById('total-items').textContent      = ingresos.length + (ingresos.length === 1 ? ' entrada' : ' entradas');
   }
 
   /* ——— RENDER LISTA ——— */
@@ -825,7 +841,7 @@
           <div class="reg-nombre">${escapeHtml(e.nombre)}</div>
           <div class="reg-actividad">${escapeHtml(e.actividad)}</div>
         </div>
-        <div class="reg-monto">+S/ ${e.monto.toLocaleString('es-PE',{minimumFractionDigits:2})}</div>
+        <div class="reg-check">✓</div>
       </div>
     `).join('');
   }
