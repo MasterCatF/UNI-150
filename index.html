@@ -475,69 +475,7 @@
   }
   .instrucciones strong { color: var(--oro); }
 
-  /* ——— FORM AGREGAR INGRESO ——— */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  @media(max-width: 500px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
 
-  .inp-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .inp-group label {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-  }
-  .inp-group input, .inp-group select {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: var(--blanco);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    outline: none;
-    transition: border 0.2s, background 0.2s;
-  }
-  .inp-group input:focus, .inp-group select:focus {
-    border-color: var(--oro);
-    background: rgba(255,215,0,0.07);
-  }
-  .inp-group input::placeholder { color: rgba(255,255,255,0.25); }
-
-  .btn-agregar {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--rojo-oscuro), var(--rojo), #FF4400);
-    background-size: 200% auto;
-    border: none;
-    border-radius: 12px;
-    color: var(--blanco);
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 900;
-    font-size: 16px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(232,0,29,0.4);
-    animation: shimmer 3s linear infinite;
-  }
-  .btn-agregar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(232,0,29,0.6);
-  }
-  .btn-agregar:active { transform: scale(0.98); }
 
   /* ——— COLUMNA DERECHA: REGISTRO ——— */
   .right-col {}
@@ -638,51 +576,13 @@
     letter-spacing: 2px;
   }
 
-  /* ——— TOAST ——— */
-  #toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
-    color: var(--blanco);
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 1px;
-    box-shadow: 0 8px 32px rgba(0,200,81,0.4);
-    z-index: 9999;
-    transform: translateY(80px);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-    pointer-events: none;
-  }
-  #toast.show { transform: translateY(0); opacity: 1; }
 
-  /* ——— CELEBRACIÓN ——— */
-  .confetti-piece {
-    position: fixed;
-    top: -20px;
-    width: 8px;
-    height: 14px;
-    border-radius: 2px;
-    animation: confettiFall linear forwards;
-    z-index: 9998;
-    pointer-events: none;
-  }
-  @keyframes confettiFall {
-    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
 </style>
 </head>
 <body>
 
 <!-- Partículas de fondo -->
 <div class="particles" id="particles"></div>
-
-<!-- Toast -->
-<div id="toast">✓ Ingreso registrado con éxito</div>
 
 <!-- Banner superior -->
 <div class="top-banner">
@@ -820,29 +720,7 @@
         </div>
       </div>
 
-      <!-- FORMULARIO -->
-      <div class="section-card">
-        <div class="section-title" style="color:var(--rojo)">
-          <span class="dot"></span>
-          Registrar ingreso
-        </div>
 
-        <div class="form-grid">
-          <div class="inp-group">
-            <label>Nombre / Donante</label>
-            <input type="text" id="inp-nombre" placeholder="Ej: Juan Quispe" maxlength="60">
-          </div>
-          <div class="inp-group">
-            <label>Actividad / Concepto</label>
-            <input type="text" id="inp-actividad" placeholder="Ej: Pollada, Bingo..." maxlength="60">
-          </div>
-        </div>
-        <div class="inp-group" style="margin-bottom:14px">
-          <label>Monto donado (S/)</label>
-          <input type="number" id="inp-monto" placeholder="0.00" min="0" step="0.01">
-        </div>
-        <button class="btn-agregar" onclick="agregarIngreso()">+ Agregar Ingreso</button>
-      </div>
 
     </div>
 
@@ -881,10 +759,34 @@
 </footer>
 
 <script>
-  /* ——— ESTADO ——— */
-  let totalRecaudado = 0;
+  /* ════════════════════════════════════════════════════════════════
+   *  📋  REGISTRO DE INGRESOS — EDITAR AQUÍ
+   *
+   *  Para agregar un nuevo ingreso, copia el bloque de ejemplo
+   *  y pégalo al FINAL de la lista (antes del corchete de cierre "]").
+   *
+   *  Formato de cada entrada:
+   *  { nombre: "Nombre del donante", actividad: "Concepto", monto: 0.00 },
+   *
+   *  EJEMPLO:
+   *  { nombre: "Carlos Ramos",  actividad: "Pollada 14 jun", monto: 150.00 },
+   *  { nombre: "Anónimo",       actividad: "Yape directo",   monto: 50.00  },
+   *  { nombre: "Promo 2019",    actividad: "Bingo",          monto: 320.00 },
+   *
+   *  NOTAS:
+   *  - "nombre"    → quién donó (puede ser "Anónimo")
+   *  - "actividad" → cómo o en qué actividad se recaudó
+   *  - "monto"     → cantidad en soles, usar punto como decimal (ej: 75.50)
+   * ════════════════════════════════════════════════════════════════ */
+  const ingresos = [
+    // ▼ AGREGA LOS INGRESOS AQUÍ ▼
+
+    // ▲ NO BORRES ESTA LÍNEA ▲
+  ];
+  /* ════════════════════════════════════════════════════════════════ */
+
+
   const META = 500000;
-  const ingresos = [];
 
   /* ——— PARTÍCULAS ——— */
   (function crearParticulas() {
@@ -904,6 +806,9 @@
       cont.appendChild(p);
     }
   })();
+
+  /* ——— CALCULAR TOTAL ——— */
+  const totalRecaudado = ingresos.reduce((sum, e) => sum + e.monto, 0);
 
   /* ——— ACTUALIZAR UI ——— */
   function actualizarUI() {
@@ -925,35 +830,6 @@
     document.getElementById('total-items').textContent = ingresos.length + (ingresos.length === 1 ? ' entrada' : ' entradas');
   }
 
-  /* ——— AGREGAR INGRESO ——— */
-  function agregarIngreso() {
-    const nombre   = document.getElementById('inp-nombre').value.trim();
-    const actividad = document.getElementById('inp-actividad').value.trim();
-    const monto    = parseFloat(document.getElementById('inp-monto').value);
-
-    if (!nombre && !actividad) {
-      alert('Por favor ingresa el nombre del donante o la actividad.');
-      return;
-    }
-    if (!monto || monto <= 0) {
-      alert('Por favor ingresa un monto válido.');
-      return;
-    }
-
-    totalRecaudado += monto;
-    const entry = { nombre: nombre || actividad, actividad: actividad || '—', monto, id: Date.now() };
-    ingresos.unshift(entry);
-
-    renderLista();
-    actualizarUI();
-    mostrarToast('¡Ingreso de S/ ' + monto.toLocaleString('es-PE',{minimumFractionDigits:2}) + ' registrado!');
-    lanzarConfetti();
-
-    document.getElementById('inp-nombre').value = '';
-    document.getElementById('inp-actividad').value = '';
-    document.getElementById('inp-monto').value = '';
-  }
-
   /* ——— RENDER LISTA ——— */
   function renderLista() {
     const lista = document.getElementById('registro-lista');
@@ -965,7 +841,9 @@
     }
     empty.style.display = 'none';
 
-    lista.innerHTML = ingresos.map((e, i) => `
+    // Mostrar en orden inverso: el último ingreso agregado aparece primero
+    const invertidos = [...ingresos].reverse();
+    lista.innerHTML = invertidos.map((e, i) => `
       <div class="registro-item">
         <div class="reg-info">
           <div class="reg-numero">#${String(ingresos.length - i).padStart(3,'0')}</div>
@@ -978,36 +856,11 @@
   }
 
   function escapeHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  /* ——— TOAST ——— */
-  function mostrarToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = '✓ ' + msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
-
-  /* ——— CONFETTI ——— */
-  function lanzarConfetti() {
-    const colors = ['#FFD700','#E8001D','#00C851','#003087','#FF4400','#FFFFFF'];
-    for (let i = 0; i < 30; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti-piece';
-      c.style.cssText = `
-        left:${Math.random()*100}vw;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        animation-duration:${Math.random()*2+2}s;
-        animation-delay:${Math.random()*0.5}s;
-        transform:rotate(${Math.random()*360}deg);
-      `;
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 4000);
-    }
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
   /* ——— INIT ——— */
+  renderLista();
   actualizarUI();
 </script>
 </body>
